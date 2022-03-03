@@ -22,8 +22,7 @@ public class Empleado {
 	
 	@Column(nullable = false, unique = true)
 	private String dni;
-	private String nmbre;
-	private String apellido;
+	private String nombre;
 	private double salario;
 	private int telefono;
 	
@@ -35,45 +34,48 @@ public class Empleado {
 	public Long getId() {
 		return id;
 	}
+	
 	public void setId(Long id) {
 		this.id = id;
 	}
+	
 	public String getDni() {
 		return dni;
 	}
+	
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
-	public String getNmbre() {
-		return nmbre;
+	
+	public String getNombre() {
+		return nombre;
 	}
-	public void setNmbre(String nmbre) {
-		this.nmbre = nmbre;
+	
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
-	public String getApellido() {
-		return apellido;
-	}
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
+	
 	public double getSalario() {
 		return salario;
 	}
+	
 	public void setSalario(double salario) {
 		this.salario = salario;
 	}
+	
 	public int getTelefono() {
 		return telefono;
 	}
+	
 	public void setTelefono(int telefono) {
 		this.telefono = telefono;
 	}
+	
 	public Departamento getDepartamento() {
 		return departamento;
 	}
 	public void setDepartamento(Departamento departamento) {
 		this.departamento = departamento;
 	}
-	
-	
+		
 }

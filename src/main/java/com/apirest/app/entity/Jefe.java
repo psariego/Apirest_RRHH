@@ -22,8 +22,7 @@ public class Jefe {
 	
 	@Column(nullable = false, unique = true)
 	private String dni;
-	private String nmbre;
-	private String apellido;
+	private String nombre;
 	private double salario;
 	private int telefono;
 	
@@ -48,20 +47,12 @@ public class Jefe {
 		this.dni = dni;
 	}
 
-	public String getNmbre() {
-		return nmbre;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setNmbre(String nmbre) {
-		this.nmbre = nmbre;
-	}
-
-	public String getApellido() {
-		return apellido;
-	}
-
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public double getSalario() {
