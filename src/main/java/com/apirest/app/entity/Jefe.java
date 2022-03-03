@@ -1,5 +1,7 @@
 package com.apirest.app.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "jefes")
-public class Jefe {
+public class Jefe implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,4 +80,6 @@ public class Jefe {
 	public void setDepartamento(Departamento departamento) {
 		this.departamento = departamento;
 	}
+	
+	private static final long serialVersionUID = 1L;
 }
