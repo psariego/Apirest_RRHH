@@ -17,35 +17,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.apirest.app.entity.Departamento;
 import com.apirest.app.entity.Empleado;
-import com.apirest.app.entity.Jefe;
-import com.apirest.app.service.DepartamentoService;
+import com.apirest.app.service.EmpleadoService;
 
-/**
- * @author psariego
- *
- */
 @RestController
 @RequestMapping("/api")
-public class DepartamentoRestController {
+public class EmpleadoRestController {
 	
 	@Autowired
-	private DepartamentoService departamentoService;
+	private EmpleadoService empleadoService;
 	
-	@GetMapping("/departamentos")
-	public List<Departamento> index(){
-		return departamentoService.findAll();
+	@GetMapping("/empleados")
+	public List<Empleado> index(){
+		return empleadoService.finAll();
 	}
 	
-	@GetMapping("/departamentos/{id}")
-	public ResponseEntity<?> findDepartamentoById(@PathVariable Long id) {
+	@GetMapping("/empleados/{id}")
+	public ResponseEntity<?> findEmpleadoById(@PathVariable Long id) {
 		
-		Departamento departamento = null;
+		Empleado empleado = null;
 		Map<String,Object> response = new HashMap<>();
 		
 		try	{
-			departamento = departamentoService.findById(id);
+			empleado = empleadoService.findById(id);
 			
 		} catch(DataAccessException e) {
 			response.put("mensaje", "Error al realizar la consulta a base de datos");
@@ -53,22 +47,22 @@ public class DepartamentoRestController {
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		if(departamento == null) {
-			response.put("mensaje", "El departamento con ID: ".concat(id.toString().concat(" no existe en la base de datos")));
+		if(empleado == null) {
+			response.put("mensaje", "El empleado con ID: ".concat(id.toString().concat(" no existe en la base de datos")));
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		
-		return new ResponseEntity<Departamento>(departamento, HttpStatus.OK);
+		return new ResponseEntity<Empleado>(empleado, HttpStatus.OK);
 	}
 	
-	@PostMapping("/departamento")
-	public ResponseEntity<?> saveDepartamento(@RequestBody Departamento departamento)	{
+	@PostMapping("/empleado")
+	public ResponseEntity<?> saveJefe(@RequestBody Empleado empleado)	{
 		
-		Departamento departamentoNuevo = null;
+		Empleado empleadoNuevo = null;
 		Map<String,Object> response = new HashMap<>();
 		
 		try	{
-			departamentoNuevo = departamentoService.save(departamento);
+			empleadoNuevo = empleadoService.save(empleado);
 			
 		} catch(DataAccessException e) {
 			response.put("mensaje", "Error al realizar una insert a base de datos");
@@ -77,26 +71,31 @@ public class DepartamentoRestController {
 			
 		}
 		
-		response.put("mensaje", "El departamento ha sido creada con éxito");
-		response.put("departamento", departamentoNuevo);
+		response.put("mensaje", "El empleado ha sido creada con éxito");
+		response.put("empleado", empleadoNuevo);
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.CREATED);
 	}
 
-	@PutMapping("/departamentos/{id}")
-	public ResponseEntity<?> updateDepartamento(@RequestBody Departamento departamento, @PathVariable Long id) {
+	@PutMapping("/empleados/{id}")
+	public ResponseEntity<?> updateEmpleado(@RequestBody Empleado empleado, @PathVariable Long id) {
 		
-		Departamento departamentoActual = departamentoService.findById(id);	
+		Empleado empleadoActual = empleadoService.findById(id);	
 		Map<String,Object> response = new HashMap<>();
 		
-		if(departamentoActual == null) {
-			response.put("mensaje", "No se puede editar el departamento, el ID ".concat(id.toString().concat(" no existe en la base de datos")));
+		if(empleadoActual == null) {
+			response.put("mensaje", "No se puede editar el empleado, el ID ".concat(id.toString().concat(" no existe en la base de datos")));
+			
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
 		}
 		
 		try {		
-			departamentoActual.setNombre(departamento.getNombre());
-			departamentoActual.setUbicacion(departamento.getUbicacion());
-			departamentoService.save(departamentoActual);
+			empleadoActual.setNombre(empleado.getNombre());
+			empleadoActual.setDni(empleado.getDni());
+			empleadoActual.setDepartamento(empleado.getDepartamento());
+			empleadoActual.setSalario(empleado.getSalario());
+			empleadoActual.setTelefono(empleado.getTelefono());
+			
+			empleadoService.save(empleadoActual);
 			
 		} catch(DataAccessException e){			
 			response.put("mensaje", "Error al realizar un update a la base de datos");
@@ -105,27 +104,27 @@ public class DepartamentoRestController {
 			
 		}
 		
-		response.put("mensaje", "El departamento ha sido actualizado con éxito");
-		response.put("departamento", departamentoActual);
+		response.put("mensaje", "El empleado ha sido actualizado con éxito");
+		response.put("empleado", empleadoActual);
 		
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.CREATED);
 	}
 
-	@DeleteMapping("/departamentos/{id}")
-	public ResponseEntity<?> deleteDepartamento(@PathVariable Long id) {
+	@DeleteMapping("/empleados/{id}")
+	public ResponseEntity<?> deleteEmpleado(@PathVariable Long id) {
 		
-		Departamento departamentoEliminado = departamentoService.findById(id);	
+		Empleado empleadoEliminado = empleadoService.findById(id);	
 		Map<String,Object> response = new HashMap<>();
 		
-		if(departamentoEliminado == null) {
-			response.put("mensaje", "No se puede eliminar el departamento, el ID ".concat(id.toString()).concat(" no existe en la base de datos"));
+		if(empleadoEliminado == null) {
+			response.put("mensaje", "No se puede eliminar el empleado, el ID ".concat(id.toString()).concat(" no existe en la base de datos"));
 			
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.NOT_FOUND);
 			
 		}
 		
 		try {
-			departamentoService.delete(id);
+			empleadoService.delete(id);
 			
 		} catch(DataAccessException e) {
 			response.put("mensaje", "Error al realizar un delete a la base de datos");
@@ -134,20 +133,10 @@ public class DepartamentoRestController {
 			return new ResponseEntity<Map<String,Object>>(response, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 		
-		response.put("mensaje", "El departamento ha sido eliminado con éxito");
-		response.put("departamento", departamentoEliminado);
+		response.put("mensaje", "El empleado ha sido eliminado con éxito");
+		response.put("empleado", empleadoEliminado);
 		
 		return new ResponseEntity<Map<String,Object>>(response, HttpStatus.OK);
 	}
-	
-	@GetMapping("/departamentos/empleados")
-	public List<Empleado>listarEmpleados() {
-		return departamentoService.findAllEmpleados();
-	}
-	
-	@GetMapping("/departamentos/jefes")
-	public List<Jefe>listarJefes(){
-		return departamentoService.findAllJefes();
-	}
- 
+
 }
