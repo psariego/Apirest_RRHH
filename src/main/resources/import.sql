@@ -6,3 +6,5 @@ INSERT INTO empleados(dni, nombre, salario, telefono, departamento_id) VALUES('9
 
 INSERT INTO jefes(dni, nombre, salario, telefono, departamento_id) VALUES('234567890B', 'Elena Nito Del Bosque', 2500, 6587452, 1);
 INSERT INTO jefes(dni, nombre, salario, telefono, departamento_id) VALUES('345678901C', 'Pepe Villuela', 2500, 6587452, 1);
+
+INSERT INTO usuarios(usuario, pass) values('psariego', 'psariego')
